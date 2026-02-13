@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_haven/presentation/cubit/login/login_cubit.dart';
+import 'package:home_haven/presentation/cubit/login/password_visibility_cubit.dart';
 // import 'package:flutter/gestures.dart';
 import '../../widgets/auth/header.dart';
 import '../../widgets/auth/input_box.dart';
@@ -30,8 +31,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(),
+    return MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => LoginCubit()),
+      BlocProvider(create: (context) => PasswordVisibilityCubit()),
+    ],
+     //BlocProvider(
+      //create: (context) => LoginCubit(),
       child: Scaffold(
         backgroundColor: const Color(0xFFF6F5F5),
         body: BlocConsumer<LoginCubit, LoginState>(
@@ -79,13 +85,30 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(height: 16),
 
-                    AuthTextField(
-                      controller: passwordController,
-                      label: "Password",
-                      hint: "**********",
-                      icon: Icons.lock_outline,
-                      isPassword: true,
-                    ),
+                    // AuthTextField(
+                    //   controller: passwordController,
+                    //   label: "Password",
+                    //   hint: "**********",
+                    //   icon: Icons.lock_outline,
+                    //   isPassword: true,
+                    // ),
+
+                    BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
+                builder: (context, visibilityState) {
+                  return AuthTextField(
+                    controller: passwordController,
+                    label: "Password",
+                    hint: "**********",
+                    icon: Icons.lock_outline,
+                    isPassword: true,
+                    obscureText: visibilityState.isObscured, // Pass state
+                    onToggle: () {
+                     
+                      context.read<PasswordVisibilityCubit>().toggleVisibility();
+                    },
+                  );
+                },
+              ),
 
                     const SizedBox(height: 24),
 

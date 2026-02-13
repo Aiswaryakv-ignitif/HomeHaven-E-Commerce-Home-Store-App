@@ -7,6 +7,8 @@ class AuthTextField extends StatelessWidget {
   final IconData icon;
   final TextEditingController? controller;
   final bool isPassword;
+  final bool obscureText; // Added parameter
+  final VoidCallback? onToggle;
 
   const AuthTextField({
     super.key,
@@ -14,7 +16,9 @@ class AuthTextField extends StatelessWidget {
     required this.hint,
     required this.icon,
     this.isPassword = false,
-     this.controller,
+    this.controller,
+    this.obscureText = false, // Default value
+    this.onToggle,
   });
 
   @override
@@ -39,24 +43,34 @@ class AuthTextField extends StatelessWidget {
                   style: GoogleFonts.manrope(
                     fontSize: 12,
                     color: const Color(0xFF404040),
-                   
                   ),
                 ),
                 TextField(
-                  obscureText: isPassword,
-                   controller: controller,
+                  obscureText: isPassword ? obscureText : false,//<------
+                  controller: controller,
                   decoration: InputDecoration(
                     hintText: hint,
                     isDense: true,
                     contentPadding: const EdgeInsets.symmetric(vertical: 4),
                     border: InputBorder.none,
-                    hintStyle: const TextStyle(color: Color(0xFF404040), fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Color(0xFF404040),
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          if (isPassword) const Icon(Icons.visibility, color: Color(0xFF757575), size:25),
+          if (isPassword)
+            GestureDetector(
+              onTap: onToggle, // Call the Cubit function here
+              child: Icon(
+                obscureText ? Icons.visibility : Icons.visibility_off,
+                color: const Color(0xFF757575),
+                size: 25,
+              ),
+            ),
         ],
       ),
     );
