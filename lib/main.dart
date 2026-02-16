@@ -28,12 +28,20 @@ class MyApp extends StatelessWidget {
       title: 'Home Haven',
         theme: ThemeData(
           fontFamily: 'Manrope',
-          scaffoldBackgroundColor: const Color(0xFFF6F5F5),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 228, 225, 225),
         ),
     initialRoute: '/',
-    routes: {
-      '/': (context) => const SplashScreen(),
-       '/main': (context) => const MainWrapper(),
+    // routes: {
+    //   '/': (context) => const SplashScreen(),
+    //    '/main': (context) => const MainWrapper(),
+    //   '/login': (context) => const LoginPage(),
+    //   '/register': (context) => const RegisterPage(),
+ 
+    // },
+
+     routes: {
+      '/splash': (context) => const SplashScreen(),
+       '/': (context) => const MainWrapper(),
       '/login': (context) => const LoginPage(),
       '/register': (context) => const RegisterPage(),
  

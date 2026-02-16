@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_haven/presentation/cubit/home/home_cubit.dart';
+import 'package:home_haven/presentation/cubit/home/home_state.dart';
+import 'package:home_haven/presentation/screens/product_details/product_details.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/data/furniture.dart';
 
@@ -9,7 +13,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return BlocProvider(
+      create: (context) => HomeCubit()..loadFurniture(),
+      child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +67,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-             
               // Location Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -95,9 +100,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(
-                      width: 8,
-                    ), 
+                    const SizedBox(width: 8),
                     const Icon(Icons.keyboard_arrow_down),
                   ],
                 ),
@@ -111,7 +114,6 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                   
                     image: AssetImage("assets/banner.jpeg"),
                     fit: BoxFit.cover,
                     // colorFilter: ColorFilter.mode(
@@ -134,9 +136,7 @@ class HomePage extends StatelessWidget {
                           0xFF156651,
                         ).withValues(alpha: 1.0), // Solid-ish green on the left
                         const Color(0xFF156651).withValues(alpha: 0.67),
-                        const Color(0xFF156651).withValues(
-                          alpha: 0.0,
-                        ),
+                        const Color(0xFF156651).withValues(alpha: 0.0),
                       ],
                     ),
                   ),
@@ -203,7 +203,7 @@ class HomePage extends StatelessWidget {
                       "Special Offers",
                       style: TextStyle(
                         fontFamily: "Manrope",
-                        color: const Color(0xFF404040),
+                        color: Color(0xFF404040),
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -226,138 +226,174 @@ class HomePage extends StatelessWidget {
               ),
 
               // The SizedBox "frames" the whole scrolling area
-              SizedBox(
-                height: 290,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(left: 16),
-                  itemCount: furnitureProducts.length,
-                  itemBuilder: (context, index) {
-                    final item = furnitureProducts[index];
-                    double original = item['originalPrice'];
-                    double finalPrice =
-                        original * (1 - (item['discountPercentage'] / 100));
-
-                    // Using Card here instead of a plain Container
-                    return Card(
-                      elevation:2, 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+              BlocConsumer<HomeCubit, HomeState>(
+                listener: (context, state) {
+                  if (state is HomeNavigateToDetails) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProductDetailsPage(product: state.product),
                       ),
-                      color: Colors.white,
-                      child: Container(
-                        width: 170,
-                        padding: const EdgeInsets.all(
-                          16.0,
-                        ), // Padding inside the card
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(width: 100),
-                                // Image Area
-                                ClipRRect(
-                                  // Clips the image to match card corners
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Container(
-                                    height: 150,
-                                    width: double.infinity,
-                                    color:  const Color(0xFFFFFFFF),
-                                    child: Image.asset(
-                                      item['images']["image1"],
-                                      fit: BoxFit.cover,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is HomeLoading) {
+                    return const SizedBox(
+                      height: 290,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+
+                  if (state is HomeError) {
+                    return SizedBox(
+                      height: 290,
+                      child: Center(child: Text(state.message)),
+                    );
+                  }
+
+                  if (state is HomeLoaded) {
+                    return SizedBox(
+                      height: 290,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.only(left: 16),
+                        itemCount: furnitureProducts.length,
+                        itemBuilder: (context, index) {
+                          final item = furnitureProducts[index];
+                          double original = item['originalPrice'];
+                          double finalPrice =
+                              original *
+                              (1 - (item['discountPercentage'] / 100));
+
+                          // Using Card here instead of a plain Container
+                          return GestureDetector(
+                            onTap: () =>
+                                context.read<HomeCubit>().selectProduct(item),
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              color: Colors.white,
+                              child: Container(
+                                width: 170,
+                                padding: const EdgeInsets.all(
+                                  16.0,
+                                ), // Padding inside the card
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        SizedBox(width: 100),
+                                        // Image Area
+                                        ClipRRect(
+                                          // Clips the image to match card corners
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          child: Container(
+                                            height: 150,
+                                            width: double.infinity,
+                                            color: const Color(0xFFFFFFFF),
+                                            child: Image.asset(
+                                              item['images']["image1"],
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        // Discount Badge
+                                        Positioned(
+                                          bottom: 8,
+                                          left: 8,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                              vertical: 3,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xFFE44A4A),
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(8),
+                                                bottomRight: Radius.circular(8),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              "${item['discountPercentage']}% OFF",
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: "Manrope",
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
-                                // Discount Badge
-                                Positioned(
-                                  bottom: 8,
-                                  left: 8,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 3,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFE44A4A),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        bottomRight: Radius.circular(8),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      item['name'],
+                                      style: const TextStyle(
+                                        color: Color(0xFF404040),
+                                        fontSize: 15,
                                       ),
                                     ),
-                                    child: Text(
-                                      "${item['discountPercentage']}% OFF",
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "\$${finalPrice.toStringAsFixed(2)}",
                                       style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: "Manrope",
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              item['name'],
-                              style: const TextStyle(
-                                color: Color(0xFF404040),
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "\$${finalPrice.toStringAsFixed(2)}",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Manrope",
-                              ),
-                            ),
-                            Text(
-                              "\$${original.toStringAsFixed(2)}",
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF404040),
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
+                                    Text(
+                                      "\$${original.toStringAsFixed(2)}",
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Color(0xFF404040),
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
 
-                            //const Spacer(), // Pushes the rating to the bottom
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: Color(0xFFEBB65B),
-                                  size: 18,
+                                    //const Spacer(), // Pushes the rating to the bottom
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          color: Color(0xFFEBB65B),
+                                          size: 18,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          "${item['rating']} (${item['reviews']})",
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Color(0xFF404040),
+                                            fontFamily: "Manrope",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "${item['rating']} (${item['reviews']})",
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xFF404040),
-                                    fontFamily: "Manrope",
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     );
-                  },
-                ),
+                  }
+                  return const SizedBox(height: 290);
+                },
               ),
-
-             
-           
             ],
           ),
         ),
-      );
-   
+      ),
+    );
   }
 }
