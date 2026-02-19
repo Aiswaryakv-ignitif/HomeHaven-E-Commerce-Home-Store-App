@@ -14,6 +14,7 @@ class AuthButton extends StatelessWidget {
         minimumSize: const Size(double.infinity, 48),
         backgroundColor: const Color(0xFF156651),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        
       ),
       child: Text(
         text,

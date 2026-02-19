@@ -11,7 +11,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
     "discountPercentage": 45,
     "rating": 4.9,
     "reviews": 256,
-    "colors": ["Harvest Gold", "Eerie Black", "Soft Grey"],
+    "colors": [
+      {"name": "Harvest Gold", "hex": 0xFFEBB65B},
+      {"name": "Eerie Black", "hex": 0xFF252525},
+      {"name": "Soft Grey", "hex": 0xFFB0B0B0},
+    ],
     "about":
         "A minimalist armchair with a reversible back cushion that provides soft support for your back. Designed for comfort and durability, perfect for modern living spaces.",
   },
@@ -26,7 +30,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
     "discountPercentage": 45,
     "rating": 4.8,
     "reviews": 128,
-    "colors": ["Grey", "Navy Blue", "Dark Green"],
+    "colors": [
+      {"name": "Grey", "hex": 0xFF808080},
+      {"name": "Navy Blue", "hex": 0xFF1B3A57},
+      {"name": "Dark Green", "hex": 0xFF1E5631},
+    ],
     "about":
         "A classic wing chair with timeless design and excellent back support. Ideal for reading corners and cozy living rooms.",
   },
@@ -41,7 +49,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
     "discountPercentage": 30,
     "rating": 4.7,
     "reviews": 342,
-    "colors": ["Birch", "Black Brown", "White"],
+    "colors": [
+      {"name": "Birch", "hex": 0xFFD7B899},
+      {"name": "Black Brown", "hex": 0xFF3B2F2F},
+      {"name": "White", "hex": 0xFFFFFFFF},
+    ],
     "about":
         "A lightweight and flexible armchair with a layered-glued bentwood frame that gives a comfortable springy feel.",
   },
@@ -56,7 +68,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
     "discountPercentage": 40,
     "rating": 4.6,
     "reviews": 198,
-    "colors": ["White", "Oak", "Black"],
+    "colors": [
+      {"name": "White", "hex": 0xFFFFFFFF},
+      {"name": "Oak", "hex": 0xFFB08968},
+      {"name": "Black", "hex": 0xFF000000},
+    ],
     "about":
         "A simple and sturdy chair with a clean design that fits seamlessly into bedrooms, offices, or dining areas.",
   },
@@ -71,7 +87,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "discountPercentage": 35,
   //   "rating": 4.8,
   //   "reviews": 89,
-  //   "colors": ["Dark Grey", "Golden Brown", "Green"],
+  //   "colors": [
+    //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
+    //   {"name": "Golden Brown", "hex": 0xFF996515},
+    //   {"name": "Green", "hex": 0xFF2E8B57},
+    // ],
   //   "about":
   //       "A premium sofa with deep seats and durable leather upholstery, offering long-lasting comfort and elegant style.",
   // },
@@ -101,7 +121,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "discountPercentage": 25,
   //   "rating": 4.7,
   //   "reviews": 76,
-  //   "colors": ["Light Beige", "Dark Grey", "Blue"],
+  //   "colors": [
+    //   {"name": "Yellow", "hex": 0xFFFFD700},
+    //   {"name": "White", "hex": 0xFFFFFFFF},
+    //   {"name": "Black", "hex": 0xFF000000},
+    // ],
   //   "about":
   //       "A deep, comfortable sofa with plush cushions and removable covers, designed for relaxed lounging and family comfort.",
   // },
@@ -116,7 +140,11 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "discountPercentage": 40,
   //   "rating": 4.6,
   //   "reviews": 221,
-  //   "colors": ["Light Grey", "Anthracite", "Blue"],
+  //    "colors": [
+    //   {"name": "Light Beige", "hex": 0xFFF5F5DC},
+    //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
+    //   {"name": "Blue", "hex": 0xFF1E90FF},
+    // ],
   //   "about":
   //       "A generous armchair with low armrests and memory foam cushions that adapt to your body for superior comfort.",
   // },

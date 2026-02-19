@@ -253,7 +253,7 @@ class HomePage extends StatelessWidget {
                     );
                   }
 
-                  if (state is HomeLoaded) {
+                  if (state is HomeLoaded || state is HomeNavigateToDetails) {
                     return SizedBox(
                       height: 290,
                       child: ListView.builder(
@@ -267,7 +267,7 @@ class HomePage extends StatelessWidget {
                               original *
                               (1 - (item['discountPercentage'] / 100));
 
-                          // Using Card here instead of a plain Container
+                         
                           return GestureDetector(
                             onTap: () =>
                                 context.read<HomeCubit>().selectProduct(item),

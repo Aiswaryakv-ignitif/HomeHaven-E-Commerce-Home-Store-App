@@ -24,5 +24,6 @@ class HomeCubit extends Cubit<HomeState> {
   // Action 2: Prepare for navigation
   void selectProduct(Map<String, dynamic> product) {
     emit(HomeNavigateToDetails(product));
+    //emit(HomeLoaded(furnitureProducts));
   }
 }

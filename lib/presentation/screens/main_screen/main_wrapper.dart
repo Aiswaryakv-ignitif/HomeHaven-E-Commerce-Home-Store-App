@@ -13,7 +13,7 @@ class MainWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> pages = [
       const HomePage(),   
-      const MyCart(),     
+      const MyCartPage(),     
       const MyProfile(),  
     ];
 
