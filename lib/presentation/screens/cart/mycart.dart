@@ -22,7 +22,7 @@ class MyCartPage extends StatelessWidget {
                 const Text(
                   "My Cart",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF404040),
                   ),

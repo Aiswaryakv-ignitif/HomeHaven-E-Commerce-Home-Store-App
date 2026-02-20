@@ -14,7 +14,7 @@ class MainWrapper extends StatelessWidget {
     final List<Widget> pages = [
       const HomePage(),   
       const MyCartPage(),     
-      const MyProfile(),  
+      const MyAccountPage(),  
     ];
 
     return BlocProvider(
