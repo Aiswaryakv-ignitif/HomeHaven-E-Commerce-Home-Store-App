@@ -1,6 +1,7 @@
 // --- 1. YOUR DATA LIST ---
 final List<Map<String, dynamic>> furnitureProducts = [
   {
+    "id": 1,
     "name": "EKERÖ",
     "images": {
       "image1": "assets/ekero_1.png",
@@ -20,6 +21,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
         "A minimalist armchair with a reversible back cushion that provides soft support for your back. Designed for comfort and durability, perfect for modern living spaces.",
   },
   {
+     "id": 2,
     "name": "STRANDMON",
     "images": {
       "image1": "assets/strandmon_1.png",
@@ -39,6 +41,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
         "A classic wing chair with timeless design and excellent back support. Ideal for reading corners and cozy living rooms.",
   },
   {
+     "id": 3,
     "name": "POÄNG",
     "images": {
       "image1": "assets/poaeng_1.png",
@@ -52,12 +55,13 @@ final List<Map<String, dynamic>> furnitureProducts = [
     "colors": [
       {"name": "Birch", "hex": 0xFFD7B899},
       {"name": "Black Brown", "hex": 0xFF3B2F2F},
-      {"name": "White", "hex": 0xFFFFFFFF},
+      {"name": "Dark Grey", "hex": 0xFF383E42},
     ],
     "about":
         "A lightweight and flexible armchair with a layered-glued bentwood frame that gives a comfortable springy feel.",
   },
   {
+     "id": 4,
     "name": "MALM Chair",
     "images": {
       "image1": "assets/malm_1.png",
@@ -77,6 +81,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
         "A simple and sturdy chair with a clean design that fits seamlessly into bedrooms, offices, or dining areas.",
   },
   // {
+  //  "id": 5,
   //   "name": "LANDSKRONA",
   //   "images": {
   //     "image1": "assets/landskrona_main.png",
@@ -96,6 +101,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //       "A premium sofa with deep seats and durable leather upholstery, offering long-lasting comfort and elegant style.",
   // },
   // {
+  //  "id": 6,
   //   "name": "PLATTLÄNS Lamp",
   //   "images": {
   //     "image1": "assets/furnitures/plattlans_main.png",
@@ -111,6 +117,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //       "A stylish pendant lamp that provides focused lighting, perfect for dining areas, kitchens, and modern interiors.",
   // },
   // {
+  //  "id": 7,
   //   "name": "FÄRLÖV Sofa",
   //   "images": {
   //     "image1": "assets/furnitures/farlov_main.png",
@@ -130,6 +137,7 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //       "A deep, comfortable sofa with plush cushions and removable covers, designed for relaxed lounging and family comfort.",
   // },
   // {
+  //  "id": 8,
   //   "name": "KIVIK Armchair",
   //   "images": {
   //     "image1": "assets/furnitures/kivik_main.png",

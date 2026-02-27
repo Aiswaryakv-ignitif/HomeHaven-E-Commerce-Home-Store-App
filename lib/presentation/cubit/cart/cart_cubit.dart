@@ -16,18 +16,53 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
-  void addToCart(Map<String, dynamic> item) {
-    if (state is CartLoaded) {
-      final currentItems = (state as CartLoaded).cartItems;
-      //final updatedList = List<Map<String, dynamic>>.from(currentItems)..add(item);
+  // void addToCart(Map<String, dynamic> item) {
+  //   if (state is CartLoaded) {
+  //     final currentItems = (state as CartLoaded).cartItems;
+  //     //final updatedList = List<Map<String, dynamic>>.from(currentItems)..add(item);
 
-      // final updatedList = List<Map<String, dynamic>>.from(currentItems);
-      // updatedList.insert(0, item);
+  //     // final updatedList = List<Map<String, dynamic>>.from(currentItems);
+  //     // updatedList.insert(0, item);
 
-      final updatedList = [item, ...currentItems];
-      emit(CartLoaded(cartItems: updatedList,totalPrice: _calculateTotal(updatedList),));
+  //     final updatedList = [item, ...currentItems];
+  //     emit(CartLoaded(cartItems: updatedList,totalPrice: _calculateTotal(updatedList),));
+  //   }
+  // }
+
+
+void addToCart(Map<String, dynamic> newItem) {
+  if (state is CartLoaded) {
+    // 1. Get the current list from the state
+    final currentItems = List<Map<String, dynamic>>.from((state as CartLoaded).cartItems);
+
+    // 2. Check if this exact product with this exact color already exists
+    int existingIndex = currentItems.indexWhere((item) => 
+      item['id'] == newItem['id'] && item['color'] == newItem['color']
+    );
+
+    List<Map<String, dynamic>> updatedList;
+
+    if (existingIndex != -1) {
+      // 3. If it exists, create a copy of the item and increment quantity
+      final updatedItem = Map<String, dynamic>.from(currentItems[existingIndex]);
+      updatedItem['quantity'] = (updatedItem['quantity'] ?? 1) + 1;
+      
+      updatedList = currentItems;
+      updatedList[existingIndex] = updatedItem;
+    } else {
+      // 4. If it's new (or a different color), add it to the top
+      updatedList = [newItem, ...currentItems];
     }
+
+    emit(CartLoaded(
+      cartItems: updatedList,
+      totalPrice: _calculateTotal(updatedList),
+    ));
   }
+}
+
+  
+
 
   void incrementQuantity(int index) {
     if (state is CartLoaded) {

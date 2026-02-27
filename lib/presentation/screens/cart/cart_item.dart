@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_haven/presentation/cubit/cart/cart_cubit.dart';
+import 'package:home_haven/presentation/cubit/favorites/favorites_cubit.dart';
+import 'package:home_haven/presentation/cubit/favorites/favorites_state.dart';
 
 class CartItemCard extends StatelessWidget {
   final Map<String, dynamic> item;
@@ -102,15 +104,44 @@ class CartItemCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       GestureDetector(
-                        onTap: () => context.read<CartCubit>().toggleSelection(index),
-                         child: Icon(
-                            item['isSelected'] == true ? Icons.favorite : Icons.favorite_border,
-                          // item['isFavorite'] ? Icons.favorite : Icons.favorite_border,
-                          color: item['isSelected'] ? Color(0XFF156651) : Colors.grey,
-                          size: 22,
-                           ),
-                       ),
+                      //  GestureDetector(
+                      //   onTap: () => context.read<CartCubit>().toggleSelection(index),
+                      //    child: Icon(
+                      //       item['isSelected'] == true ? Icons.favorite : Icons.favorite_border,
+                      //     // item['isFavorite'] ? Icons.favorite : Icons.favorite_border,
+                      //     color: item['isSelected'] ? Color(0XFF156651) : Colors.grey,
+                      //     size: 22,
+                      //      ),
+                      //  ),
+
+
+
+                      // 1. GLOBAL FAVORITE HEART ICON
+    BlocBuilder<FavoritesCubit, FavoritesState>(
+      builder: (context, favState) {
+        // We use the 'id' and 'color' we just added to the cart item
+        final bool isFav = context.read<FavoritesCubit>().isFavorite(
+          item['id'], 
+          item['color'],
+        );
+
+        return GestureDetector(
+          onTap: () {
+            // Toggles favorite status globally
+            context.read<FavoritesCubit>().toggleFavorite(
+              item['id'], 
+              item['color'],
+            );
+          },
+          child: Icon(
+            isFav ? Icons.favorite : Icons.favorite_border,
+            // Use your theme color when favorited, grey when not
+            color: isFav ? const Color(0XFF156651) : Colors.grey,
+            size: 22,
+          ),
+        );
+      },
+    ),
 
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 2,horizontal: 6),

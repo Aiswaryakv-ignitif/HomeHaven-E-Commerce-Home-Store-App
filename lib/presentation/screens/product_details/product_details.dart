@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_haven/presentation/cubit/cart/cart_cubit.dart';
+import 'package:home_haven/presentation/cubit/favorites/favorites_cubit.dart';
+import 'package:home_haven/presentation/cubit/favorites/favorites_state.dart';
 import 'package:home_haven/presentation/cubit/product_details/details_cubit.dart';
 import 'package:home_haven/presentation/cubit/product_details/details_state.dart';
 import 'package:home_haven/presentation/widgets/auth/button.dart';
@@ -15,6 +17,7 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double dynamicWidth = (screenWidth - 32 - 12) / 2;
+    
 
     return BlocProvider(
       create: (context) => ProductDetailsCubit()..loadProduct(product),
@@ -41,7 +44,10 @@ class ProductDetailsPage extends StatelessWidget {
           if (state is ProductDetailsLoaded) {
             final product = state.product;
             final selectedColorIndex = state.selectedColorIndex;
-            final isFavorite = state.isFavorite;
+            // final isFavorite = state.isFavorite;
+            final String currentColorName = product['colors'][selectedColorIndex]['name'];
+            final isCurrentVariantAdded = state.addedIndices.contains(state.selectedColorIndex);
+            
 
             return Scaffold(
               body: SafeArea(
@@ -283,41 +289,119 @@ class ProductDetailsPage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.read<ProductDetailsCubit>().toggleFavorite();
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color(0xFF156651),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          // Icons.favorite_border,
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: const Color(0xFF156651),
-                        ),
-                      ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     context.read<ProductDetailsCubit>().toggleFavorite();
+                    //   },
+                    //   child: Container(
+                    //     height: 50,
+                    //     width: 50,
+                    //     decoration: BoxDecoration(
+                    //       border: Border.all(
+                    //         color: const Color(0xFF156651),
+                    //         width: 1.5,
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(12),
+                    //     ),
+                    //     child: Icon(
+                    //       // Icons.favorite_border,
+                    //       isFavorite ? Icons.favorite : Icons.favorite_border,
+                    //       color: const Color(0xFF156651),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // 2.  FAVORITE LOGIC 
+          BlocBuilder<FavoritesCubit, FavoritesState>(
+            builder: (context, favState) {
+              // We check the global favorite status using our helper
+              final bool isFav = context.read<FavoritesCubit>().isFavorite(
+                product['id'], 
+                currentColorName
+              );
+
+              return GestureDetector(
+                onTap: () {
+                  // We call the GLOBAL FavoritesCubit, not the DetailsCubit
+                  context.read<FavoritesCubit>().toggleFavorite(
+                    product['id'], 
+                    currentColorName
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(0xFF156651),
+                      width: 1.5,
                     ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    isFav ? Icons.favorite : Icons.favorite_border,
+                    color: const Color(0xFF156651),
+                  ),
+                ),
+              );
+            },
+          ),
+
+
+
+
                     const SizedBox(width: 16),
 
+                    // Expanded(
+                    //   child: AuthButton(
+                    //     text: "Add to Cart",
+                    //     onPressed: () {
+                    //       context
+                    //           .read<ProductDetailsCubit>()
+                    //           .addCurrentProductToCart(
+                    //             context.read<CartCubit>(),
+                    //           );
+                    //     },
+                    //   ),
+                    // ),
                     Expanded(
-                      child: AuthButton(
-                        text: "Add to Cart",
-                        onPressed: () {
-                          // 1. Tell the Cubit to do the work
-                          context
-                              .read<ProductDetailsCubit>()
-                              .addCurrentProductToCart(
-                                context.read<CartCubit>(),
-                              );
-                        },
-                      ),
+                      child:
+                          // state.isAddedToCart // Assuming this variable exists in your state
+                          isCurrentVariantAdded
+                          ? OutlinedButton(
+                              onPressed:
+                                  null, // Makes the button look disabled/inactive
+                              style: OutlinedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                side: const BorderSide(
+                                  color: Color(0xFF156651),
+                                  width: 1.5,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text(
+                                "Added to Cart",
+                                style: GoogleFonts.manrope(
+                                  color: const Color(0xFF156651),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            )
+                          : AuthButton(
+                              text: "Add to Cart",
+                              onPressed: () {
+                                context
+                                    .read<ProductDetailsCubit>()
+                                    .addCurrentProductToCart(
+                                      context.read<CartCubit>(),
+                                    );
+                              },
+                            ),
                     ),
                   ],
                 ),

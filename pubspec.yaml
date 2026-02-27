@@ -31,11 +31,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^9.1.1       # State management (Cubit)
+  flutter_bloc: ^9.1.1 
+  smooth_page_indicator: ^2.0.1      # State management (Cubit)
   get_it: ^7.6.0             # Dependency Injection (The "Glue")           
   shared_preferences: ^2.2.0 # To remember if Onboarding is finished
   flutter_native_splash: ^2.3.0 # For the Splash Screen
-  carousel_slider: ^4.2.1  
+  carousel_slider: ^5.0.0 
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.10+1
 
@@ -87,6 +88,9 @@ flutter:
     - assets/malm_2.png
     - assets/malm_3.png
     - assets/profile.png
+    - assets/onboarding1.png
+    - assets/onboarding2.png
+    - assets/onboarding3.png
     
     
    
