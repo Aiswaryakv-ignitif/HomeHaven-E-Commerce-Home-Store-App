@@ -17,6 +17,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       selectedColorIndex: 0, // default first color
       // isFavorite: false ,
       showSuccessMessage: false,
+      selectedImageIndex: 0,
+      
     ));
   }
 
@@ -32,6 +34,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         showSuccessMessage: currentState.showSuccessMessage,
         // isAddedToCart:currentState.isAddedToCart,
         addedIndices:currentState.addedIndices,
+        selectedImageIndex: 0,
       ));
 
       //same code with currentstate.copywith()
@@ -58,6 +61,17 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
 //   }
 // }
 
+  void changeImage(int index) {
+    if (state is ProductDetailsLoaded) {
+      final currentState = state as ProductDetailsLoaded;
+
+      emit(currentState.copyWith(
+        selectedImageIndex: index,
+        showSuccessMessage: false,
+      ));
+    }
+  }
+
   /// Add to cart
 
   void addCurrentProductToCart(CartCubit cartCubit) {
@@ -72,7 +86,9 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       'color': currentState.product['colors'][currentState.selectedColorIndex]['name'],
       'originalPrice': currentState.product['originalPrice'],
       'discount': currentState.product['discountPercentage'],
-      'image': currentState.product['images']['image1'],
+      'image': currentState.product['colors']
+            [currentState.selectedColorIndex]['images']
+            [0],
       'quantity': 1,
       // 'isSelected': currentState.isFavorite,
     };
@@ -104,3 +120,4 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   }
 }
 }
+

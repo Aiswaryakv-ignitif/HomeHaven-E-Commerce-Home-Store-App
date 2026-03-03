@@ -3,79 +3,199 @@ final List<Map<String, dynamic>> furnitureProducts = [
   {
     "id": 1,
     "name": "EKERÖ",
-    "images": {
-      "image1": "assets/ekero_1.png",
-      "image2": "assets/ekero_2.png",
-      "image3": "assets/ekero_3.png",
-    },
+    // "images": {
+    //   "image1": "assets/ekero_1.png",
+    //   "image2": "assets/ekero_2.png",
+    //   "image3": "assets/ekero_3.png",
+    // },
     "originalPrice": 512.58,
     "discountPercentage": 45,
     "rating": 4.9,
     "reviews": 256,
     "colors": [
-      {"name": "Harvest Gold", "hex": 0xFFEBB65B},
-      {"name": "Eerie Black", "hex": 0xFF252525},
-      {"name": "Soft Grey", "hex": 0xFFB0B0B0},
+      {
+        "colorId": 1,
+        "name": "Harvest Gold",
+        "hex": 0xFFEBB65B,
+        "images": [
+          "assets/products/ekero/harvest_gold/ekero_gold_1.png",
+          "assets/products/ekero/harvest_gold/ekero_gold_2.png",
+          "assets/products/ekero/harvest_gold/ekero_gold_3.png",
+        ],
+      },
+      {
+        "colorId": 2,
+        "name": "Eerie Black",
+        "hex": 0xFF252525,
+        "images": [
+          "assets/products/ekero/eerie_black/ekero_black_1.png",
+          "assets/products/ekero/eerie_black/ekero_black__2.png",
+          "assets/products/ekero/eerie_black/ekero_black__3.png",
+        ],
+      },
+      {
+        "colorId": 3,
+        "name": "Soft Grey",
+        "hex": 0xFFB0B0B0,
+        "images": [
+          "assets/products/ekero/soft_grey/ekero_grey_1.png",
+          "assets/products/ekero/soft_grey/ekero_grey_2.png",
+          "assets/products/ekero/soft_grey/ekero_grey_3.png",
+        ],
+      },
     ],
     "about":
         "A minimalist armchair with a reversible back cushion that provides soft support for your back. Designed for comfort and durability, perfect for modern living spaces.",
   },
   {
-     "id": 2,
+    "id": 2,
     "name": "STRANDMON",
-    "images": {
-      "image1": "assets/strandmon_1.png",
-      "image2": "assets/strandmon_2.png",
-      "image3": "assets/strandmon_3.png",
-    },
+    // "images": {
+    //   "image1": "assets/strandmon_1.png",
+    //   "image2": "assets/strandmon_2.png",
+    //   "image3": "assets/strandmon_3.png",
+    // },
     "originalPrice": 856.60,
     "discountPercentage": 45,
     "rating": 4.8,
     "reviews": 128,
     "colors": [
-      {"name": "Grey", "hex": 0xFF808080},
-      {"name": "Navy Blue", "hex": 0xFF1B3A57},
-      {"name": "Dark Green", "hex": 0xFF1E5631},
+      {
+        "colorId": 1,
+        "name": "Vissle Grey",
+        "hex": 0xFF808080,
+        "images": [
+          "assets/products/strandmon/vissle_grey/strandmon_grey_1.png",
+          "assets/products/strandmon/vissle_grey/strandmon_grey_2.png",
+          "assets/products/strandmon/vissle_grey/strandmon_grey_3.png",
+        ],
+      },
+
+      // {
+      //   "colorId": 2,
+      //   "name": "Navy Blue",
+      //   "hex": 0xFF1B3A57,
+      //   "images": [
+      //     "assets/strandmon_blue_1.png",
+      //     "assets/strandmon_blue_2.png",
+      //     "assets/strandmon_blue_3.png",
+      //   ],
+      // },
+      {
+        "colorId": 2,
+        "name": "Kelinge Beige",
+        "hex": 0xFFEBE1C2,
+        "images": [
+          "assets/products/strandmon/kelinge_beige/strandmon_beige_1.png",
+          "assets/products/strandmon/kelinge_beige/strandmon_beige_2.png",
+          "assets/products/strandmon/kelinge_beige/strandmon_beige_3.png",
+        ],
+      },
+      {
+        "colorId": 3,
+        "name": "Dark Green",
+        "hex": 0xFF1E5631,
+        "images": [
+          "assets/products/strandmon/dark_green/strandmon_green_1.png",
+          "assets/products/strandmon/dark_green/strandmon_green_2.png",
+          "assets/products/strandmon/dark_green/strandmon_green_3.png",
+        ],
+      },
     ],
     "about":
         "A classic wing chair with timeless design and excellent back support. Ideal for reading corners and cozy living rooms.",
   },
   {
-     "id": 3,
+    "id": 3,
     "name": "POÄNG",
-    "images": {
-      "image1": "assets/poaeng_1.png",
-      "image2": "assets/poaeng_2.png",
-      "image3": "assets/poaeng_3.png",
-    },
+    // "images": {
+    //   "image1": "assets/poaeng_1.png",
+    //   "image2": "assets/poaeng_2.png",
+    //   "image3": "assets/poaeng_3.png",
+    // },
     "originalPrice": 399.99,
     "discountPercentage": 30,
     "rating": 4.7,
     "reviews": 342,
     "colors": [
-      {"name": "Birch", "hex": 0xFFD7B899},
-      {"name": "Black Brown", "hex": 0xFF3B2F2F},
-      {"name": "Dark Grey", "hex": 0xFF383E42},
+      {
+        "colorId": 1,
+        "name": "Knisa Beige",
+        "hex": 0xFFDBD2C3,
+
+        "images": [
+          "assets/products/poaeng/knisa_beige/poaeng_beige_1.png",
+          "assets/products/poaeng/knisa_beige/poaeng_beige_2.png",
+          "assets/products/poaeng/knisa_beige/poaeng_beige_3.png",
+        ],
+      },
+      {
+        "colorId": 2,
+        "name": "Knisa Black",
+        "hex": 0xFF000000,
+        "images": [
+          "assets/products/poaeng/knisa_black/poaeng_black_1.png",
+          "assets/products/poaeng/knisa_black/poaeng_black_2.png",
+          "assets/products/poaeng/knisa_black/poaeng_black_3.png",
+        ],
+      },
+      {
+        "colorId": 3,
+        "name": "Skiftebo Dark Grey",
+        "hex": 0xFF636363,
+        "images": [
+          "assets/products/poaeng/skiftebo_grey/poaeng_grey_1.png",
+          "assets/products/poaeng/skiftebo_grey/poaeng_grey_2.png",
+          "assets/products/poaeng/skiftebo_grey/poaeng_grey_3.png",
+        ],
+      },
     ],
     "about":
         "A lightweight and flexible armchair with a layered-glued bentwood frame that gives a comfortable springy feel.",
   },
   {
-     "id": 4,
+    "id": 4,
     "name": "MALM Chair",
-    "images": {
-      "image1": "assets/malm_1.png",
-      "image2": "assets/malm_2.png",
-      "image3": "assets/malm_3.png",
-    },
+    // "images": {
+    //   "image1": "assets/malm_1.png",
+    //   "image2": "assets/malm_2.png",
+    //   "image3": "assets/malm_3.png",
+    // },
     "originalPrice": 289.50,
     "discountPercentage": 40,
     "rating": 4.6,
     "reviews": 198,
     "colors": [
-      {"name": "White", "hex": 0xFFFFFFFF},
-      {"name": "Oak", "hex": 0xFFB08968},
-      {"name": "Black", "hex": 0xFF000000},
+      {
+        "colorId": 1,
+        "name": "Black",
+        "hex": 0xFF000000,
+        "images": [
+          "assets/products/malm/black/malm_black_1.png",
+          "assets/products/malm/black/malm_black_2.png",
+          "assets/products/malm/black/malm_black_3.png",
+        ],
+      },
+      {
+        "colorId": 2,
+        "name": "White",
+        "hex": 0xFFFFFFFF,
+        "images": [
+          "assets/products/malm/white/malm_white_1.png",
+          "assets/products/malm/white/malm_white_2.png",
+          "assets/products/malm/white/malm_white_3.png",
+        ],
+      },
+      {
+        "colorId": 3,
+        "name": "White Oak",
+        "hex": 0xFFB08968,
+        "images": [
+          "assets/products/malm/white_oak/malm_oak_1.png",
+          "assets/products/malm/white_oak/malm_oak_2.png",
+          "assets/products/malm/white_oak/malm_oak_3.png",
+        ],
+      },
     ],
     "about":
         "A simple and sturdy chair with a clean design that fits seamlessly into bedrooms, offices, or dining areas.",
@@ -93,10 +213,10 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "rating": 4.8,
   //   "reviews": 89,
   //   "colors": [
-    //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
-    //   {"name": "Golden Brown", "hex": 0xFF996515},
-    //   {"name": "Green", "hex": 0xFF2E8B57},
-    // ],
+  //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
+  //   {"name": "Golden Brown", "hex": 0xFF996515},
+  //   {"name": "Green", "hex": 0xFF2E8B57},
+  // ],
   //   "about":
   //       "A premium sofa with deep seats and durable leather upholstery, offering long-lasting comfort and elegant style.",
   // },
@@ -129,10 +249,10 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "rating": 4.7,
   //   "reviews": 76,
   //   "colors": [
-    //   {"name": "Yellow", "hex": 0xFFFFD700},
-    //   {"name": "White", "hex": 0xFFFFFFFF},
-    //   {"name": "Black", "hex": 0xFF000000},
-    // ],
+  //   {"name": "Yellow", "hex": 0xFFFFD700},
+  //   {"name": "White", "hex": 0xFFFFFFFF},
+  //   {"name": "Black", "hex": 0xFF000000},
+  // ],
   //   "about":
   //       "A deep, comfortable sofa with plush cushions and removable covers, designed for relaxed lounging and family comfort.",
   // },
@@ -149,10 +269,10 @@ final List<Map<String, dynamic>> furnitureProducts = [
   //   "rating": 4.6,
   //   "reviews": 221,
   //    "colors": [
-    //   {"name": "Light Beige", "hex": 0xFFF5F5DC},
-    //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
-    //   {"name": "Blue", "hex": 0xFF1E90FF},
-    // ],
+  //   {"name": "Light Beige", "hex": 0xFFF5F5DC},
+  //   {"name": "Dark Grey", "hex": 0xFF4F4F4F},
+  //   {"name": "Blue", "hex": 0xFF1E90FF},
+  // ],
   //   "about":
   //       "A generous armchair with low armrests and memory foam cushions that adapt to your body for superior comfort.",
   // },

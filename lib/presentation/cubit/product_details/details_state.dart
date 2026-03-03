@@ -13,7 +13,8 @@ class ProductDetailsLoaded extends ProductDetailsState {
   // final bool isFavorite;
   final bool showSuccessMessage;
   // final bool isAddedToCart;
-   final Set<int> addedIndices; // Store indices here: {0, 2}
+  final Set<int> addedIndices; // Store indices here: {0, 2}
+  final int selectedImageIndex;
 
   ProductDetailsLoaded({
     required this.product,
@@ -22,6 +23,7 @@ class ProductDetailsLoaded extends ProductDetailsState {
     this.showSuccessMessage = false,
     // this.isAddedToCart = false,
     this.addedIndices = const {},
+    required this.selectedImageIndex,
   });
 
   // The copyWith method
@@ -31,8 +33,8 @@ class ProductDetailsLoaded extends ProductDetailsState {
     // bool? isFavorite,
     bool? showSuccessMessage,
     // bool? isAddedToCart,
-     Set<int>? addedIndices,
-   
+    Set<int>? addedIndices,
+    int? selectedImageIndex,
   }) {
     return ProductDetailsLoaded(
       // Use the new value if provided, otherwise keep the current one
@@ -42,7 +44,7 @@ class ProductDetailsLoaded extends ProductDetailsState {
       showSuccessMessage: showSuccessMessage ?? this.showSuccessMessage,
       // isAddedToCart: isAddedToCart ?? this.isAddedToCart,
       addedIndices: addedIndices ?? this.addedIndices,
-     
+      selectedImageIndex: selectedImageIndex ?? this.selectedImageIndex,
     );
   }
 }

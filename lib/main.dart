@@ -59,7 +59,13 @@ class MyApp extends StatelessWidget {
          '/onboard': (context) => const OnboardingScreen(),
       },
 
-      
+      //  routes: {
+      //   '/spalsh': (context) => const SplashScreen(),
+      //    '/': (context) => const MainWrapper(),
+      //   '/login': (context) => const LoginPage(),
+      //   '/register': (context) => const RegisterPage(),
+      //    '/onboard': (context) => const OnboardingScreen(),
+      // },
     );
   }
 }

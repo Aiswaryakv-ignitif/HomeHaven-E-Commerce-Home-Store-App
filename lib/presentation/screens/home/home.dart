@@ -299,7 +299,8 @@ class HomePage extends StatelessWidget {
                                             width: double.infinity,
                                             color: const Color(0xFFFFFFFF),
                                             child: Image.asset(
-                                              item['images']["image1"],
+                                              // item['images']["image1"],
+                                              item['colors'][0]['images'][0],
                                               fit: BoxFit.cover,
                                             ),
                                           ),

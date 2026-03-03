@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 6), () {
       Navigator.pushReplacement(
         context,
-        // MaterialPageRoute(builder: (context) => LoginPage()), // Change to your Login/Onboarding page
+        // MaterialPageRoute(builder: (context) => LoginPage()), 
         MaterialPageRoute(builder: (context) => OnboardingScreen()), 
       );
     });

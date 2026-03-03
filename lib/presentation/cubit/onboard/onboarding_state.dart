@@ -5,10 +5,10 @@ abstract class OnboardingState {
 
 // Used for normal swiping
 class OnboardingPageChanged extends OnboardingState {
-  OnboardingPageChanged(int index) : super(index);
+  OnboardingPageChanged(super.index);
 }
 
 // Used ONLY when it's time to navigate to Login
 class OnboardingNavigateToLogin extends OnboardingState {
-  OnboardingNavigateToLogin(int index) : super(index); // We are on the last page
+  OnboardingNavigateToLogin(super.index); 
 }

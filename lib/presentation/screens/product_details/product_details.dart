@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,19 +9,35 @@ import 'package:home_haven/presentation/cubit/product_details/details_cubit.dart
 import 'package:home_haven/presentation/cubit/product_details/details_state.dart';
 import 'package:home_haven/presentation/widgets/auth/button.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final Map<String, dynamic> product;
 
   const ProductDetailsPage({super.key, required this.product});
 
   @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  final CarouselSliderController _carouselController =CarouselSliderController();
+  late ProductDetailsCubit _detailsCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the Cubit once in the 'Vault'
+    _detailsCubit = ProductDetailsCubit()..loadProduct(widget.product);
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double dynamicWidth = (screenWidth - 32 - 12) / 2;
-    
 
-    return BlocProvider(
-      create: (context) => ProductDetailsCubit()..loadProduct(product),
+    // return BlocProvider(
+    // create: (context) => ProductDetailsCubit()..loadProduct(widget.product),
+    return BlocProvider.value(
+      value: _detailsCubit,
       child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
         listener: (context, state) {
           if (state is ProductDetailsLoaded && state.showSuccessMessage) {
@@ -44,10 +61,17 @@ class ProductDetailsPage extends StatelessWidget {
           if (state is ProductDetailsLoaded) {
             final product = state.product;
             final selectedColorIndex = state.selectedColorIndex;
+            final selectedImageIndex = state.selectedImageIndex;
             // final isFavorite = state.isFavorite;
-            final String currentColorName = product['colors'][selectedColorIndex]['name'];
-            final isCurrentVariantAdded = state.addedIndices.contains(state.selectedColorIndex);
-            
+            final String currentColorName =
+                product['colors'][selectedColorIndex]['name'];
+            final isCurrentVariantAdded = state.addedIndices.contains(
+              state.selectedColorIndex,
+            );
+            // final List currentVariantImages = product['colors'][selectedColorIndex]['images'];
+            final List<String> images = List<String>.from(
+              product['colors'][selectedColorIndex]['images'],
+            );
 
             return Scaffold(
               body: SafeArea(
@@ -55,33 +79,79 @@ class ProductDetailsPage extends StatelessWidget {
                   child: Column(
                     children: [
                       // 1. Large Product Image
-                      Container(
-                        height: 300,
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
-                        child: Image.asset(
-                          product['images']["image1"],
-                          fit: BoxFit.contain,
+                      // Container(
+                      //   height: 300,
+                      //   width: double.infinity,
+                      //   padding: const EdgeInsets.symmetric(horizontal: 40),
+                      //   child: Image.asset(
+                      //     product['images']["image1"],
+                      //     fit: BoxFit.contain,
+                      //   ),
+                      // ),
+
+                      ///  CAROUSEL
+                      CarouselSlider.builder(
+                        carouselController: _carouselController,
+                        itemCount: images.length,
+                        options: CarouselOptions(
+                          height: 300,
+                          viewportFraction: 1,
+                          enableInfiniteScroll: false,
+                          initialPage: selectedImageIndex,
+                          onPageChanged: (index, reason) {
+                            context.read<ProductDetailsCubit>().changeImage(
+                              index,
+                            );
+                          },
                         ),
+                        itemBuilder: (context, index, realIndex) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 40),
+                            child: Image.asset(
+                              images[index],
+                              fit: BoxFit.contain,
+                            ),
+                          );
+                        },
                       ),
 
                       // 2. Small Gallery Preview
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 20),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       _buildGalleryItem(
+                      //         product['images']["image1"],
+                      //         isActive: true,
+                      //       ),
+                      //       const SizedBox(width: 12),
+                      //       _buildGalleryItem(
+                      //         product['images']["image2"],
+                      //       ), // Placeholder for extra images
+                      //       const SizedBox(width: 12),
+                      //       _buildGalleryItem(product['images']["image3"]),
+                      //     ],
+                      //   ),
+                      // ),
+
+
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _buildGalleryItem(
-                              product['images']["image1"],
-                              isActive: true,
-                            ),
-                            const SizedBox(width: 12),
-                            _buildGalleryItem(
-                              product['images']["image2"],
-                            ), // Placeholder for extra images
-                            const SizedBox(width: 12),
-                            _buildGalleryItem(product['images']["image3"]),
-                          ],
+                          children: List.generate(images.length, (index) {
+                            return GestureDetector(
+                              onTap: () => _carouselController.jumpToPage(index),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 6),
+                                child: _buildGalleryItem(
+                                  images[index],
+                                  selectedImageIndex  == index,
+                                ),
+                              ),
+                            );
+                          }),
                         ),
                       ),
 
@@ -208,21 +278,6 @@ class ProductDetailsPage extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // Row(
-
-                                  //   children: [
-                                  //     _buildColorOption(
-                                  //       "Harvest Gold",
-                                  //       const Color(0xFFEBB65B),
-                                  //       isSelected: true,
-                                  //     ),
-                                  //     const SizedBox(width: 12),
-                                  //     _buildColorOption(
-                                  //       "Eerie Black",
-                                  //       const Color(0xFF252525),
-                                  //     ),
-                                  //   ],
-                                  // ),
                                   Wrap(
                                     spacing: 12, // horizontal gap between items
                                     runSpacing:
@@ -242,9 +297,14 @@ class ProductDetailsPage extends StatelessWidget {
                                                   selectedColorIndex == index,
                                               onTap: () {
                                                 // Tell the cubit to change the index
-                                                context
-                                                    .read<ProductDetailsCubit>()
-                                                    .changeColor(index);
+                                                // context
+                                                //     .read<ProductDetailsCubit>()
+                                                //     .changeColor(index);
+
+                                                // 1. Change color in Cubit
+                                            context.read<ProductDetailsCubit>().changeColor(index);
+                                            // 2. Reset carousel to first image of new color
+                                            _carouselController.jumpToPage(0);
                                               },
                                             ),
                                           );
@@ -311,44 +371,40 @@ class ProductDetailsPage extends StatelessWidget {
                     //   ),
                     // ),
 
-                    // 2.  FAVORITE LOGIC 
-          BlocBuilder<FavoritesCubit, FavoritesState>(
-            builder: (context, favState) {
-              // We check the global favorite status using our helper
-              final bool isFav = context.read<FavoritesCubit>().isFavorite(
-                product['id'], 
-                currentColorName
-              );
+                    // 2.  FAVORITE LOGIC
+                    BlocBuilder<FavoritesCubit, FavoritesState>(
+                      builder: (context, favState) {
+                        // We check the global favorite status using our helper
+                        final bool isFav = context
+                            .read<FavoritesCubit>()
+                            .isFavorite(product['id'], currentColorName);
 
-              return GestureDetector(
-                onTap: () {
-                  // We call the GLOBAL FavoritesCubit, not the DetailsCubit
-                  context.read<FavoritesCubit>().toggleFavorite(
-                    product['id'], 
-                    currentColorName
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xFF156651),
-                      width: 1.5,
+                        return GestureDetector(
+                          onTap: () {
+                            // We call the GLOBAL FavoritesCubit, not the DetailsCubit
+                            context.read<FavoritesCubit>().toggleFavorite(
+                              product['id'],
+                              currentColorName,
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xFF156651),
+                                width: 1.5,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              isFav ? Icons.favorite : Icons.favorite_border,
+                              color: const Color(0xFF156651),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    isFav ? Icons.favorite : Icons.favorite_border,
-                    color: const Color(0xFF156651),
-                  ),
-                ),
-              );
-            },
-          ),
-
-
-
 
                     const SizedBox(width: 16),
 
@@ -415,7 +471,7 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildGalleryItem(String imagePath, {bool isActive = false}) {
+  Widget _buildGalleryItem(String imagePath, bool isActive ) {
     return Container(
       height: 60,
       width: 60,

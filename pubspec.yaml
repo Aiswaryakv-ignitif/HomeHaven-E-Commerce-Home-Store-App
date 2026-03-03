@@ -75,22 +75,23 @@ flutter:
     - assets/google_icon.png
     - assets/facebook_icon.png
     - assets/banner.jpeg
-    - assets/ekero_1.png 
-    - assets/ekero_2.png 
-    - assets/ekero_3.png
-    - assets/strandmon_1.png
-    - assets/strandmon_2.png
-    - assets/strandmon_3.png
-    - assets/poaeng_1.png
-    - assets/poaeng_2.png 
-    - assets/poaeng_3.png 
-    - assets/malm_1.png
-    - assets/malm_2.png
-    - assets/malm_3.png
     - assets/profile.png
     - assets/onboarding1.png
     - assets/onboarding2.png
     - assets/onboarding3.png
+    # - assets/products/
+    - assets/products/ekero/harvest_gold/
+    - assets/products/ekero/eerie_black/
+    - assets/products/ekero/soft_grey/
+    - assets/products/strandmon/vissle_grey/
+    - assets/products/strandmon/kelinge_beige/
+    - assets/products/strandmon/dark_green/
+    - assets/products/poaeng/knisa_beige/
+    - assets/products/poaeng/knisa_black/
+    - assets/products/poaeng/skiftebo_grey/
+    - assets/products/malm/black/
+    - assets/products/malm/white/
+    - assets/products/malm/white_oak/
     
     
    
