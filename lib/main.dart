@@ -20,7 +20,7 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider<CartCubit>(
-          create: (context) => CartCubit(),
+          create: (context) => CartCubit()..loadCart(),
         ),
        
         BlocProvider<OnboardingCubit>(
@@ -59,13 +59,6 @@ class MyApp extends StatelessWidget {
          '/onboard': (context) => const OnboardingScreen(),
       },
 
-      //  routes: {
-      //   '/spalsh': (context) => const SplashScreen(),
-      //    '/': (context) => const MainWrapper(),
-      //   '/login': (context) => const LoginPage(),
-      //   '/register': (context) => const RegisterPage(),
-      //    '/onboard': (context) => const OnboardingScreen(),
-      // },
     );
   }
 }

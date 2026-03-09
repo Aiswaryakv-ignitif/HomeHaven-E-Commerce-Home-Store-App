@@ -62,13 +62,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             final product = state.product;
             final selectedColorIndex = state.selectedColorIndex;
             final selectedImageIndex = state.selectedImageIndex;
-            // final isFavorite = state.isFavorite;
-            final String currentColorName =
-                product['colors'][selectedColorIndex]['name'];
-            final isCurrentVariantAdded = state.addedIndices.contains(
-              state.selectedColorIndex,
-            );
-            // final List currentVariantImages = product['colors'][selectedColorIndex]['images'];
+
+            final String currentColorName =product['colors'][selectedColorIndex]['name'];
+            
+            final isCurrentVariantAdded = state.addedIndices.contains(state.selectedColorIndex,);
+          
             final List<String> images = List<String>.from(
               product['colors'][selectedColorIndex]['images'],
             );
@@ -79,16 +77,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: Column(
                     children: [
                       // 1. Large Product Image
-                      // Container(
-                      //   height: 300,
-                      //   width: double.infinity,
-                      //   padding: const EdgeInsets.symmetric(horizontal: 40),
-                      //   child: Image.asset(
-                      //     product['images']["image1"],
-                      //     fit: BoxFit.contain,
-                      //   ),
-                      // ),
-
                       ///  CAROUSEL
                       CarouselSlider.builder(
                         carouselController: _carouselController,
@@ -116,26 +104,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
 
                       // 2. Small Gallery Preview
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(vertical: 20),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       _buildGalleryItem(
-                      //         product['images']["image1"],
-                      //         isActive: true,
-                      //       ),
-                      //       const SizedBox(width: 12),
-                      //       _buildGalleryItem(
-                      //         product['images']["image2"],
-                      //       ), // Placeholder for extra images
-                      //       const SizedBox(width: 12),
-                      //       _buildGalleryItem(product['images']["image3"]),
-                      //     ],
-                      //   ),
-                      // ),
-
-
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
@@ -165,7 +133,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             topRight: Radius.circular(30),
                           ),
                         ),
-                        //padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
                             Padding(
@@ -297,11 +264,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                   selectedColorIndex == index,
                                               onTap: () {
                                                 // Tell the cubit to change the index
-                                                // context
-                                                //     .read<ProductDetailsCubit>()
-                                                //     .changeColor(index);
-
-                                                // 1. Change color in Cubit
                                             context.read<ProductDetailsCubit>().changeColor(index);
                                             // 2. Reset carousel to first image of new color
                                             _carouselController.jumpToPage(0);
@@ -335,12 +297,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
                   boxShadow: [
                     BoxShadow(
-                      color: Color.fromARGB(
-                        255,
-                        0,
-                        0,
-                        0,
-                      ).withValues(alpha: 0.1),
+                      color: Color.fromARGB(255,0,0,0,).withValues(alpha: 0.1),
                       blurRadius: 5,
                       // offset:  Offset(0, -2),
                     ),
@@ -349,39 +306,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     context.read<ProductDetailsCubit>().toggleFavorite();
-                    //   },
-                    //   child: Container(
-                    //     height: 50,
-                    //     width: 50,
-                    //     decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         color: const Color(0xFF156651),
-                    //         width: 1.5,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(12),
-                    //     ),
-                    //     child: Icon(
-                    //       // Icons.favorite_border,
-                    //       isFavorite ? Icons.favorite : Icons.favorite_border,
-                    //       color: const Color(0xFF156651),
-                    //     ),
-                    //   ),
-                    // ),
 
                     // 2.  FAVORITE LOGIC
                     BlocBuilder<FavoritesCubit, FavoritesState>(
                       builder: (context, favState) {
                         // We check the global favorite status using our helper
-                        final bool isFav = context
-                            .read<FavoritesCubit>()
-                            .isFavorite(product['id'], currentColorName);
+                        final bool isFav = context.read<FavoritesCubit>().isFavorite(product['id'], currentColorName);
 
                         return GestureDetector(
                           onTap: () {
-                            // We call the GLOBAL FavoritesCubit, not the DetailsCubit
                             context.read<FavoritesCubit>().toggleFavorite(
                               product['id'],
                               currentColorName,
@@ -408,23 +341,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
                     const SizedBox(width: 16),
 
-                    // Expanded(
-                    //   child: AuthButton(
-                    //     text: "Add to Cart",
-                    //     onPressed: () {
-                    //       context
-                    //           .read<ProductDetailsCubit>()
-                    //           .addCurrentProductToCart(
-                    //             context.read<CartCubit>(),
-                    //           );
-                    //     },
-                    //   ),
-                    // ),
+      
                     Expanded(
-                      child:
-                          // state.isAddedToCart // Assuming this variable exists in your state
-                          isCurrentVariantAdded
-                          ? OutlinedButton(
+                      child:isCurrentVariantAdded? OutlinedButton(
                               onPressed:
                                   null, // Makes the button look disabled/inactive
                               style: OutlinedButton.styleFrom(

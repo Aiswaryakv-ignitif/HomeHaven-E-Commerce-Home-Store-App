@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:home_haven/presentation/screens/login/login_page.dart';
-import'package:home_haven/presentation/screens/onboarding/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,14 +14,27 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Move to the next screen after 3 seconds
-    Timer(const Duration(seconds: 6), () {
-      Navigator.pushReplacement(
-        context,
-        // MaterialPageRoute(builder: (context) => LoginPage()), 
-        MaterialPageRoute(builder: (context) => OnboardingScreen()), 
-      );
-    });
+    checkAppState();
+  }
+
+  Future<void> checkAppState() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    bool isOnboardingSeen = prefs.getBool('isOnboardingSeen') ?? false;
+
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (!mounted) return;
+
+    if (!isOnboardingSeen) {
+      Navigator.pushReplacementNamed(context, '/onboard');
+    } else if (!isLoggedIn) {
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      Navigator.pushReplacementNamed(context, '/main');
+    }
   }
 
   @override
@@ -33,9 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
         height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [ Color(0xFF1A7F65), 
-                    Color(0xFF115543),
-         ],
+            colors: [Color(0xFF1A7F65), Color(0xFF115543)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -44,28 +54,23 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/home.png', 
-                width: 150,
-                height: 150,
-              ),
-             
+              Image.asset('assets/home.png', width: 150, height: 150),
+
               Text(
                 'HomeHaven',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   color: Colors.white,
-                  fontSize: 36,               
-                  fontWeight: FontWeight.w800, 
-                  height: 1.2,                // line-height: 120%
-                  letterSpacing: 0,           // letter-spacing: 0%
+                  fontSize: 36,
+                  fontWeight: FontWeight.w800,
+                  height: 1.2, // line-height: 120%
+                  letterSpacing: 0, // letter-spacing: 0%
                 ),
               ),
             ],
           ),
         ),
-      )
+      ),
     );
-   
   }
 }

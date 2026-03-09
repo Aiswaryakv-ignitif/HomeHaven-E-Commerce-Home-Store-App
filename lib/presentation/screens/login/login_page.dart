@@ -85,13 +85,6 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(height: 16),
 
-                    // AuthTextField(
-                    //   controller: passwordController,
-                    //   label: "Password",
-                    //   hint: "**********",
-                    //   icon: Icons.lock_outline,
-                    //   isPassword: true,
-                    // ),
 
                     BlocBuilder<PasswordVisibilityCubit, PasswordVisibilityState>(
                 builder: (context, visibilityState) {

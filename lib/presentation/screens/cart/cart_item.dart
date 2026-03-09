@@ -27,7 +27,7 @@ class CartItemCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            // 1. Image (Note: Using Image.asset since your path is 'assets/...')
+            // 1. Image 
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
@@ -94,32 +94,24 @@ class CartItemCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // const SizedBox(height: 2),
+                 
                   Text(
                     item['color'],
                     style: const TextStyle(color: Colors.grey, fontSize: 16),
                   ),
-                  // const SizedBox(height: 8),
+                 
                   // 3. Favorite & Quantity Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //  GestureDetector(
-                      //   onTap: () => context.read<CartCubit>().toggleSelection(index),
-                      //    child: Icon(
-                      //       item['isSelected'] == true ? Icons.favorite : Icons.favorite_border,
-                      //     // item['isFavorite'] ? Icons.favorite : Icons.favorite_border,
-                      //     color: item['isSelected'] ? Color(0XFF156651) : Colors.grey,
-                      //     size: 22,
-                      //      ),
-                      //  ),
+                     
 
 
 
                       // 1. GLOBAL FAVORITE HEART ICON
     BlocBuilder<FavoritesCubit, FavoritesState>(
       builder: (context, favState) {
-        // We use the 'id' and 'color' we just added to the cart item
+       
         final bool isFav = context.read<FavoritesCubit>().isFavorite(
           item['id'], 
           item['color'],
@@ -154,8 +146,6 @@ class CartItemCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
-                              // constraints: const BoxConstraints(),
-                              // padding: const EdgeInsets.all(4),
                               onTap: () => context
                                   .read<CartCubit>()
                                   .decrementQuantity(index),
@@ -177,8 +167,6 @@ class CartItemCard extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              // constraints: const BoxConstraints(),
-                              // padding: const EdgeInsets.all(4),
                               onTap: () => context
                                   .read<CartCubit>()
                                   .incrementQuantity(index),

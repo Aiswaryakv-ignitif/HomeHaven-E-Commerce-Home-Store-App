@@ -116,28 +116,7 @@ class MyCartPage extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 16),
 
-                                // SizedBox(
-                                //   width: double.infinity,
-                                //   height: 55,
-                                //   child: ElevatedButton(
-                                //     onPressed: () {},
-                                //     style: ElevatedButton.styleFrom(
-                                //       backgroundColor: const Color(0XFF156651),
-                                //       shape: RoundedRectangleBorder(
-                                //         borderRadius: BorderRadius.circular(12),
-                                //       ),
-                                //       elevation: 0,
-                                //     ),
-                                //     child: const Text(
-                                //       "Checkout",
-                                //       style: TextStyle(
-                                //         fontSize: 18,
-                                //         fontWeight: FontWeight.bold,
-                                //         color: Colors.white,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
+                          
                                 AuthButton(
                                   text: "Checkout",
                                   onPressed: () {
@@ -145,11 +124,11 @@ class MyCartPage extends StatelessWidget {
                                   },
                                 ),
 
-                                // ++++++++
+                                
                               ],
                             ),
                           ),
-                          // =======
+                         
                         ],
                       );
                     }

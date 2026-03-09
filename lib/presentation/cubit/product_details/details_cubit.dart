@@ -15,7 +15,6 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     emit(ProductDetailsLoaded(
       product: product,
       selectedColorIndex: 0, // default first color
-      // isFavorite: false ,
       showSuccessMessage: false,
       selectedImageIndex: 0,
       
@@ -30,36 +29,14 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       emit(ProductDetailsLoaded(
         product: currentState.product,
         selectedColorIndex: index,
-        // isFavorite: currentState.isFavorite,
         showSuccessMessage: currentState.showSuccessMessage,
-        // isAddedToCart:currentState.isAddedToCart,
         addedIndices:currentState.addedIndices,
         selectedImageIndex: 0,
       ));
 
-      //same code with currentstate.copywith()
-      // emit(currentState.copyWith(
-      //   selectedColorIndex: index,
-      //   showSuccessMessage: false, 
-      //   // addedIndices is automatically carried over by copyWith
-      // ));
     }
   }
 
-//   void toggleFavorite() {
-//   if (state is ProductDetailsLoaded) {
-//     final currentState = state as ProductDetailsLoaded;
-
-//     emit(currentState.copyWith(isFavorite: !currentState.isFavorite));
-//     // or
-//     // emit(ProductDetailsLoaded(
-//     //   product: currentState.product,
-//     //   selectedColorIndex: currentState.selectedColorIndex,
-//     //   isFavorite: !currentState.isFavorite, // The '!' means 'the opposite'
-//     //   showSuccessMessage: currentState.showSuccessMessage,
-//     // ));
-//   }
-// }
 
   void changeImage(int index) {
     if (state is ProductDetailsLoaded) {
@@ -83,14 +60,15 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     final itemForCart = {
       'id':currentState.product['id'],
       'name': currentState.product['name'],
-      'color': currentState.product['colors'][currentState.selectedColorIndex]['name'],
+      // 'color': currentState.product['colors'][currentState.selectedColorIndex]['name'],
+      'color': (currentState.product['colors'][currentState.selectedColorIndex]['name'] as String).trim().split(' ').last,
       'originalPrice': currentState.product['originalPrice'],
       'discount': currentState.product['discountPercentage'],
       'image': currentState.product['colors']
             [currentState.selectedColorIndex]['images']
             [0],
       'quantity': 1,
-      // 'isSelected': currentState.isFavorite,
+     
     };
 
     // 2. Add to Global Cart
@@ -101,21 +79,13 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
 
     // 3. Trigger the Snackbar
     // This creates a NEW state object with showSuccessMessage set to true
-    // emit(currentState.copyWith(showSuccessMessage: true,isAddedToCart: true,));
      emit(currentState.copyWith(showSuccessMessage: true,addedIndices: updatedIndices,));
     
 
-    // or
-//     emit(ProductDetailsLoaded(
-//   product: currentState.product,
-//   selectedColorIndex: currentState.selectedColorIndex,
-//   isFavorite: currentState.isFavorite,
-//   showSuccessMessage: true, // Only this changed!
-// ));
+
 
     // 4. Reset the trigger immediately
     // This creates a NEW state object with showSuccessMessage set to false
-    // emit(currentState.copyWith(showSuccessMessage: false,isAddedToCart: true,));
     emit(currentState.copyWith(showSuccessMessage: false,addedIndices: updatedIndices,));
   }
 }

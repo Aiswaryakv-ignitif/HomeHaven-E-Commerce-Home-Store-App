@@ -7,7 +7,6 @@ import 'package:home_haven/presentation/screens/product_details/product_details.
 //import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/data/furniture.dart';
 
-// --- 2. MAIN UI CODE ---
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -85,10 +84,10 @@ class HomePage extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    // --- WRAP THE ADDRESS IN EXPANDED ---
+                    // --- ADDRESS section ---
                     Expanded(
                       child: Text(
-                        "3517 W. Gray St. Utica, Pennsylvania 12345", // Use the full address now!
+                        "3517 W. Gray St. Utica, Pennsylvania 12345",
                         style: GoogleFonts.manrope(
                           color: const Color(0xFF404040),
                           fontWeight: FontWeight.bold,
@@ -281,7 +280,7 @@ class HomePage extends StatelessWidget {
                                 width: 170,
                                 padding: const EdgeInsets.all(
                                   16.0,
-                                ), // Padding inside the card
+                                ), 
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -299,7 +298,6 @@ class HomePage extends StatelessWidget {
                                             width: double.infinity,
                                             color: const Color(0xFFFFFFFF),
                                             child: Image.asset(
-                                              // item['images']["image1"],
                                               item['colors'][0]['images'][0],
                                               fit: BoxFit.cover,
                                             ),
@@ -360,7 +358,7 @@ class HomePage extends StatelessWidget {
                                       ),
                                     ),
 
-                                    //const Spacer(), // Pushes the rating to the bottom
+                                   
                                     Row(
                                       children: [
                                         const Icon(
