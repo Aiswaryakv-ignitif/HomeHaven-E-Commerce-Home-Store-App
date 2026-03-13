@@ -54,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
             else if (state is LoginSuccess) {
             Navigator.pushReplacementNamed(context, '/main');
           } else if (state is LoginFailure) {
+            Navigator.pop(context); //to go back to initial state from loading state
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorMessage)),
             );

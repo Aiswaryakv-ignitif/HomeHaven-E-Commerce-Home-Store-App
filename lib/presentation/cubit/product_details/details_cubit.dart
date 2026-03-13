@@ -60,8 +60,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     final itemForCart = {
       'id':currentState.product['id'],
       'name': currentState.product['name'],
-      // 'color': currentState.product['colors'][currentState.selectedColorIndex]['name'],
-      'color': (currentState.product['colors'][currentState.selectedColorIndex]['name'] as String).trim().split(' ').last,
+      'color': currentState.product['colors'][currentState.selectedColorIndex]['name'],
+      // 'color': (currentState.product['colors'][currentState.selectedColorIndex]['name'] as String).trim().split(' ').last,
       'originalPrice': currentState.product['originalPrice'],
       'discount': currentState.product['discountPercentage'],
       'image': currentState.product['colors']

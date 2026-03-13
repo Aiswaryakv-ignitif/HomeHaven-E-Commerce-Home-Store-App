@@ -10,11 +10,19 @@ import 'package:home_haven/presentation/screens/main_screen/main_wrapper.dart';
 import 'package:home_haven/presentation/screens/onboarding/onboarding.dart';
 import 'package:home_haven/presentation/screens/splash/splash.dart';
 import 'presentation/screens/register/register.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   // 1. Initialize Flutter and preserve the native splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
+
+
 
   runApp(
     MultiBlocProvider(

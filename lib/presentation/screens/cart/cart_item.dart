@@ -96,7 +96,8 @@ class CartItemCard extends StatelessWidget {
                   ),
                  
                   Text(
-                    item['color'],
+                    // item['color'], 
+                    item['color'].split(' ').last,
                     style: const TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                  
