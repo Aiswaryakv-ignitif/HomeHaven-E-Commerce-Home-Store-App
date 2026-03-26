@@ -8,10 +8,19 @@ import 'package:home_haven/presentation/cubit/onboard/onboarding_cubit.dart';
 import 'package:home_haven/presentation/screens/login/login_page.dart';
 import 'package:home_haven/presentation/screens/main_screen/main_wrapper.dart';
 import 'package:home_haven/presentation/screens/onboarding/onboarding.dart';
+import 'package:home_haven/presentation/screens/push_notification/push_notification.dart';
 import 'package:home_haven/presentation/screens/splash/splash.dart';
 import 'presentation/screens/register/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
+
+Future<void> handleBackgroundMessage(RemoteMessage message) async {
+  print("got message in the background state");
+  print("Title: ${message.notification?.title}");
+}
 
 void main() async {
   // 1. Initialize Flutter and preserve the native splash
@@ -20,7 +29,18 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
+
+    // ✅ ADD THIS (battery level)
+  // print(await BatteryService.getBatteryLevel());
+  
+
+
+  NotificationService notificationService = NotificationService();
+  await notificationService.initFCM();
+
+  // Set the background handler
+  FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
 
 

@@ -47,12 +47,26 @@ dependencies:
   firebase_core: ^4.5.0
   firebase_auth: ^6.2.0
   firebase_messaging: ^16.1.2
+  flutter_local_notifications: ^21.0.0
+ 
+
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
     # For the Onboarding swipe
+  
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png" 
+  adaptive_icon_foreground: "assets/foreground.png"
+  adaptive_icon_background: "assets/background.png"
+
+ 
+  
  
 
   # The "flutter_lints" package below contains a set of recommended lints to

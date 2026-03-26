@@ -70,13 +70,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     itemBuilder: (context, index, realIndex) {
                       return Column(
                         children: [
-                          ClipPath(
-                            clipper: HeaderClipper(),
-                            child: Image.asset(
-                              onboardingData[index]['image']!,
-                              height: MediaQuery.of(context).size.height * 0.55,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
+                          Expanded(
+                            flex:55,
+                            child: ClipPath(
+                              clipper: HeaderClipper(),
+                              child: Image.asset(
+                                onboardingData[index]['image']!,
+                                height: MediaQuery.of(context).size.height * 0.55,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -86,21 +89,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               onboardingData[index]['title']!,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 38,
+                                fontSize: 30,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF404040),
                                 height: 1.1,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                           SizedBox(height: 10),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               onboardingData[index]['desc']!,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 color: Color(0xFF757575),
                                 height: 1.2,
                               ),
@@ -111,6 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                   ),
                 ),
+                SizedBox(height: 10,) ,
                 _buildBottomControls(state.currentIndex),
                 const SizedBox(height: 80),
               ],
@@ -203,3 +207,4 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
+
